@@ -1,4 +1,4 @@
-import { RawScrapeData, RouteResult, Participant, Statistics, Results } from '../types';
+import { RawScrapeData, Participant, Statistics, Results } from '../types';
 import { constructRoute, mergeObj } from '../utils';
 
 export const resolvePositionAndName = (col: string): [string, string] | [string] => {

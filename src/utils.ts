@@ -1,9 +1,9 @@
-import iconv from 'iconv-lite';
-import https from 'https';
-import http from 'http';
-import he from 'he';
-import detectCharEncoding from 'detect-character-encoding';
-import Xray from 'x-ray';
+import * as iconv from 'iconv-lite';
+import * as https from 'https';
+import * as http from 'http';
+import * as he from 'he';
+import * as detectCharEncoding from 'detect-character-encoding';
+import * as Xray from 'x-ray';
 import { RawScrapeData, Route } from './types';
 
 export const detectEncoding = (input: Buffer): string => {

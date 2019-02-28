@@ -11,7 +11,7 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": false
   },
   "exclude": ["**/*.spec.ts", "node_modules"]
 }
