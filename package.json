@@ -1,0 +1,33 @@
+{
+  "name": "eresults-parser",
+  "description": "Unofficial HTML to JSON parser for eResult Lite 3 and 4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": "8.15.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "detect-character-encoding": "^0.7.0",
+    "he": "^1.2.0",
+    "iconv-lite": "^0.4.24",
+    "x-ray": "^2.3.3"
+  },
+  "devDependencies": {
+    "@types/detect-character-encoding": "^0.7.0",
+    "@types/express": "^4.16.1",
+    "@types/he": "^1.1.0",
+    "@types/jest": "^24.0.6",
+    "@types/node": "^11.9.4",
+    "@types/x-ray": "^2.3.2",
+    "jest": "^24.1.0",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.12.1",
+    "tslint-sonarts": "^1.9.0",
+    "typescript": "^3.3.3333"
+  },
+  "scripts": {
+    "build": "rm -rf dist package.zip && tsc -p tsconfig.json && cp package*.json dist && cd dist && zip -r -X ../package.zip * && cd ..",
+    "test": "jest"
+  }
+}
