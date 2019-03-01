@@ -28,6 +28,7 @@
   },
   "scripts": {
     "build": "rm -rf dist package.zip && tsc -p tsconfig.json && cp package*.json dist && cd dist && zip -r -X ../package.zip * && cd ..",
-    "test": "jest"
+    "test": "jest",
+    "lint": "tslint -c tslint.json -p tsconfig.json"
   }
 }

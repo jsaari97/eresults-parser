@@ -29,7 +29,7 @@ export const constructParticipant = (row: string[]): Participant => {
     diff,
     name,
     position: position ? Number(position[0]) : null,
-    time: time!.match(/\d+/g) ? time : null,
+    time: time.match(/\d+/g) ? time : null,
   };
 };
 
