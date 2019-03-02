@@ -4,12 +4,16 @@ import { cleanTags, constructPoints } from './intervals';
 describe('cleanTags()', () => {
   it('should return right stuff', () => {
     const pre = `1. John Doe 1-02.30 - 2-07.22\r\n\r 1-05.30 2-20.56Ingen sluttid\r\n
-    \r 1-05.30 2-20.56 Ingen sluttid\r\n\r 1-05.30 2-20.56   Ingen sluttid`;
+    \r 1-05.30 2-20.56 Ingen sluttid\r\n\r 1-05.30 2-20.56   Ingen sluttid\r\n\r
+    2. John-Doe Doe 1-05.30 2-20.56 Ingen sluttid\r\n\r
+    2. John-Doe Doe-Doe 1-05.30 2-20.56 Ingen sluttid`;
     expect(cleanTags(pre)).toEqual([
       ['1. John Doe', '1-02.30', '-', '2-07.22'],
       ['1-05.30', '2-20.56', 'Ingen sluttid'],
       ['1-05.30', '2-20.56', 'Ingen sluttid'],
       ['1-05.30', '2-20.56', 'Ingen sluttid'],
+      ['2. John-Doe Doe', '1-05.30', '2-20.56', 'Ingen sluttid'],
+      ['2. John-Doe Doe-Doe', '1-05.30', '2-20.56', 'Ingen sluttid'],
     ]);
   });
 

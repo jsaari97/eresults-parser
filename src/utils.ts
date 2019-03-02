@@ -3,7 +3,7 @@ import * as https from 'https';
 import * as http from 'http';
 import * as he from 'he';
 import * as detectCharEncoding from 'detect-character-encoding';
-import * as Xray from 'x-ray';
+import * as xray from 'x-ray';
 import { RawScrapeData, Route } from './types';
 
 export const detectEncoding = (input: Buffer): string => {
@@ -42,7 +42,7 @@ export const decideDocType = ({ pre }: RawScrapeData): 'results' | 'intervals' =
   return ratio.filter((r) => r > 0.1).length > ratio.length / 2 ? 'intervals' : 'results';
 };
 
-const x = Xray();
+const x = xray();
 
 export const scrape = (data: string): Promise<RawScrapeData | null> => new Promise(async (resolve, reject) => {
   try {

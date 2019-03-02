@@ -7,9 +7,9 @@ import {
 export const cleanTags = (data: string): string[][] => data.split('\n')
   .map((row) =>
     row
-      .replace(/(\s\s+)/g, ' ')
+      .replace(/(\s\s+)/g, '  ')
       .replace(/([0-9])([A-Za-z])/g, '$1 $2')
-      .replace(/(-)([A-Za-z])/g, '$1 $2')
+      .replace(/[^A-Za-z](-)([A-Za-z])/g, '$1 $2')
       .replace('\r', '')
       .split(/(?=\s\d+|\s-\s|^-\s|\s-$|(?<=[-0-9])\s+(?=[a-zA-Z]))/g)
       .map((col) => col.trim())
