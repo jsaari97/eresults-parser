@@ -1,8 +1,27 @@
+// tslint:disable:no-identical-functions
 import {
   resolvePositionAndName,
   constructParticipant,
   constructStatistics,
+  cleanTags,
 } from './results';
+
+describe('cleanTags()', () => {
+  it('should parse rows correctly', () => {
+    const pre = `1. John Doe     association     21.10     +50.20\r\n\r
+    `;
+    expect(cleanTags(pre)).toEqual([[
+      '1.', 'John Doe', 'association', '21.10', '+50.20',
+    ]]);
+  });
+  it('should parse rows with firstname === 3 correctly', () => {
+    const pre = `   - Jon Doee                    association               \r\n\r
+    `;
+    expect(cleanTags(pre)).toEqual([[
+      '- Jon Doee', 'association',
+    ]]);
+  });
+});
 
 describe('resolvePositionAndName()', () => {
   it('should handle normal cases', () => {
@@ -24,6 +43,10 @@ describe('resolvePositionAndName()', () => {
   it('should handle if empty spaces instead of number', () => {
     const input = '   aaaa aaaa';
     expect(resolvePositionAndName(input)).toEqual(['null', 'aaaa aaaa']);
+  });
+  it('should handle if first name is 3 letters long', () => {
+    const input = '- aaa aaaa';
+    expect(resolvePositionAndName(input)).toEqual(['null', 'aaa aaaa']);
   });
 });
 

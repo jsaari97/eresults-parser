@@ -6,8 +6,7 @@ export const resolvePositionAndName = (col: string): [string, string] | [string]
   if (match) {
     return [match[0]];
   }
-
-  const parsed = col.replace(/^([A-Za-z]{3}|-|\s+)+\s/, '').trim();
+  const parsed = col.replace(/^([A-Z]{3}|-|\s+)+\s/, '').trim();
   const firstSpace = parsed.indexOf(' ');
   const first = parsed.substr(0, firstSpace);
   const rest = parsed.substr(firstSpace + 1);
