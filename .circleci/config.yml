@@ -19,7 +19,4 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
 
-      - run:
-          command: node_modules/.bin/jest --ci --runInBand --reporters=default --reporters=jest-junit
-          environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+      - run: node_modules/.bin/jest --ci --runInBand --coverage  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
