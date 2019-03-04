@@ -2,6 +2,9 @@
 
 Unofficial HTML to JSON parser cloud function for eResults. Tested with eResults Lite 3 and 4.
 
+![codecov](https://img.shields.io/codecov/c/github/jsaari97/eresults-parser.svg?style=flat)
+![circleci](https://img.shields.io/circleci/project/github/jsaari97/eresults-parser/master.svg?style=flat)
+
 ## Features
 * eResults Lite 3 and 4 support.
 * Automatically detects if results or splits.

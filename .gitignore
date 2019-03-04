@@ -6,3 +6,4 @@ coverage/
 .DS_Store
 package.zip
 package/
+junit.xml
