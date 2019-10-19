@@ -3,23 +3,19 @@ import {
   resolvePositionAndName,
   constructParticipant,
   constructStatistics,
-  cleanTags,
+  cleanTags
 } from './results';
 
 describe('cleanTags()', () => {
   it('should parse rows correctly', () => {
     const pre = `1. John Doe     association     21.10     +50.20\r\n\r
     `;
-    expect(cleanTags(pre)).toEqual([[
-      '1.', 'John Doe', 'association', '21.10', '+50.20',
-    ]]);
+    expect(cleanTags(pre)).toEqual([['1.', 'John Doe', 'association', '21.10', '+50.20']]);
   });
   it('should parse rows with firstname === 3 correctly', () => {
     const pre = `   - Jon Doee                    association               \r\n\r
     `;
-    expect(cleanTags(pre)).toEqual([[
-      '- Jon Doee', 'association',
-    ]]);
+    expect(cleanTags(pre)).toEqual([['- Jon Doee', 'association']]);
   });
 });
 
@@ -58,7 +54,7 @@ describe('constructParticipant()', () => {
       diff: '+01:30',
       name: 'John Doe',
       position: 2,
-      time: '51:25',
+      time: '51:25'
     });
   });
 
@@ -69,7 +65,7 @@ describe('constructParticipant()', () => {
       diff: '+01:30',
       name: 'John Doe',
       position: 2,
-      time: '51:25',
+      time: '51:25'
     });
   });
 
@@ -80,7 +76,7 @@ describe('constructParticipant()', () => {
       diff: null,
       name: 'John Doe',
       position: 1,
-      time: '51:25',
+      time: '51:25'
     });
   });
 
@@ -91,7 +87,7 @@ describe('constructParticipant()', () => {
       diff: null,
       name: 'John Doe',
       position: null,
-      time: null,
+      time: null
     });
   });
 
@@ -102,7 +98,7 @@ describe('constructParticipant()', () => {
       diff: null,
       name: 'John Doe',
       position: null,
-      time: null,
+      time: null
     });
   });
 });
@@ -113,7 +109,7 @@ describe('constructStatistics()', () => {
     expect(constructStatistics(row)).toEqual({
       disqualified: 7,
       exited: 15,
-      started: 30,
+      started: 30
     });
   });
 });

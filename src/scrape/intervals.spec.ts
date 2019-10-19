@@ -1,5 +1,5 @@
 // tslint:disable:no-duplicate-string
-import { cleanTags, constructPoints } from './intervals';
+import { cleanTags, constructPoints, getPositionAndName } from './intervals';
 
 describe('cleanTags()', () => {
   it('should return right stuff', () => {
@@ -13,7 +13,7 @@ describe('cleanTags()', () => {
       ['1-05.30', '2-20.56', 'Ingen sluttid'],
       ['1-05.30', '2-20.56', 'Ingen sluttid'],
       ['2. John-Doe Doe', '1-05.30', '2-20.56', 'Ingen sluttid'],
-      ['2. John-Doe Doe-Doe', '1-05.30', '2-20.56', 'Ingen sluttid'],
+      ['2. John-Doe Doe-Doe', '1-05.30', '2-20.56', 'Ingen sluttid']
     ]);
   });
 
@@ -23,23 +23,34 @@ describe('cleanTags()', () => {
 
     expect(cleanTags(pre)).toEqual([
       ['21. Sune Lind', '-', '-', '-', '-', 'Ingen sluttid'],
-      ['-', '-', '-', '-'],
+      ['-', '-', '-', '-']
     ]);
   });
+
 });
 
 describe('constructPoints()', () => {
   it('should parse points', () => {
-    const row = [
-      '1. [035]',
-      '14. [031]',
-      '15. [100] Resultat',
-    ];
+    const row = ['1. [035]', '14. [031]', '15. [100] Resultat'];
 
     expect(constructPoints(row)).toEqual([
       { position: 1, identifier: '035' },
       { position: 14, identifier: '031' },
-      { position: 15, identifier: '100' },
+      { position: 15, identifier: '100' }
     ]);
   });
 });
+
+describe('getPositionAndName()', () => {
+  it('should handle position and name', () => {
+    expect(getPositionAndName('1. John Doe')).toEqual({ position: 1, name: 'John Doe' })
+  })
+
+  it('should handle only name', () => {
+    expect(getPositionAndName('John Doe')).toEqual({ position: null, name: 'John Doe' })
+  })
+
+  it('should handle long names', () => {
+    expect(getPositionAndName('112. John Doe-mc asdf')).toEqual({ position: 112, name: 'John Doe-mc asdf' })
+  })
+})

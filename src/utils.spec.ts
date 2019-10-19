@@ -1,18 +1,11 @@
 // tslint:disable:no-identical-functions
-import {
-  convertToUtf,
-  decideDocType,
-  mergeObj,
-  fetchFile,
-  constructRoute,
-} from './utils';
+import { convertToUtf, decideDocType, mergeObj, fetchFile, constructRoute } from './utils';
 import * as fs from 'fs';
 import * as path from 'path';
 import { RawScrapeData } from './types';
 
-const loadMockData = (type: 'intervals' | 'results'): RawScrapeData => JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, `__mocks__/${type}.json`), 'utf8'),
-);
+const loadMockData = (type: 'intervals' | 'results'): RawScrapeData =>
+  JSON.parse(fs.readFileSync(path.resolve(__dirname, `__mocks__/${type}.json`), 'utf8'));
 
 describe('convertToUtf', () => {
   it('should convert to uft-8', () => {
@@ -55,22 +48,22 @@ describe('constructRoute()', () => {
   it('should return correct format', () => {
     expect(constructRoute('A 6,6 km, tilanne rasteilla, rastivälien ajat')).toEqual({
       length: 6.6,
-      name: 'A',
+      name: 'A'
     });
 
     expect(constructRoute('Rata-A 6,6 km, tilanne rasteilla, rastivälien ajat')).toEqual({
       length: 6.6,
-      name: 'A',
+      name: 'A'
     });
 
     expect(constructRoute('Bana A 6,6 km')).toEqual({
       length: 6.6,
-      name: 'A',
+      name: 'A'
     });
 
     expect(constructRoute('A-bana 6,6 km')).toEqual({
       length: 6.6,
-      name: 'A',
+      name: 'A'
     });
   });
 });

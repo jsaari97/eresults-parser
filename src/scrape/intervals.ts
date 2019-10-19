@@ -1,44 +1,62 @@
-import { RawScrapeData, IntervalsResults, IntervalParticipant, ControlPoint, TimePoint } from '../types';
 import {
-  constructRoute,
-  mergeObj,
-} from '../utils';
+  RawScrapeData,
+  IntervalsResults,
+  IntervalParticipant,
+  ControlPoint,
+  TimePoint
+} from '../types';
+import { constructRoute, mergeObj } from '../utils';
 
-export const cleanTags = (data: string): string[][] => data.split('\n')
-  .map((row) =>
-    row
-      .replace(/(\s\s+)/g, '  ')
-      .replace(/([0-9])([A-Za-z])/g, '$1 $2')
-      .replace(/[^A-Za-z](-)([A-Za-z])/g, '$1 $2')
-      .replace('\r', '')
-      .split(/(?=\s\d+|\s-\s|^-\s|\s-$|(?<=[-0-9])\s+(?=[a-zA-Z]))/g)
-      .map((col) => col.trim())
-      .filter(Boolean),
-  )
-  .filter((row) => row.length);
+export const cleanTags = (data: string): string[][] =>
+  data
+    .split('\n')
+    .map(row =>
+      row
+        .replace(/(\s\s+)/g, '  ')
+        .replace(/([0-9])([A-Za-z])/g, '$1 $2')
+        .replace(/[^A-Za-z](-)([A-Za-z])/g, '$1 $2')
+        .replace('\r', '')
+        .split(/(?=\s\d+|\s-\s|^-\s|\s-$|(?<=[-0-9])\s+(?=[a-zA-Z]))/g)
+        .map(col => col.trim())
+        .filter(Boolean)
+    )
+    .filter(row => row.length);
 
-export const getEndTime = (col: string): string | null => col.match(/\d/g) ? col : null;
+export const getEndTime = (col: string): string | null => (col.match(/\d/g) ? col : null);
 
-export const constructTimePoint = (intervals: Array<TimePoint | null>, col: string): Array<TimePoint | null> => {
+export const constructTimePoint = (
+  intervals: Array<TimePoint | null>,
+  col: string
+): Array<TimePoint | null> => {
   const split = col.split('-');
   if (!split[0]) {
     return [...intervals, null];
   }
   const rank = Number(split.shift());
   const [time] = split;
-  const diff = (intervals.slice().reverse().find(Boolean) || { rank }).rank - rank;
+  const diff =
+    (
+      intervals
+        .slice()
+        .reverse()
+        .find(Boolean) || { rank }
+    ).rank - rank;
 
-  return [
-    ...intervals,
-    { rank, time, diff },
-  ];
+  return [...intervals, { rank, time, diff }];
 };
 
-export const getPositionAndName = (col: string): { position: number, name: string } => {
+export const getPositionAndName = (col: string): { position: number | null; name: string } => {
+  if (!col.match(/\d/g)) {
+    return {
+      name: col,
+      position: null
+    };
+  }
+
   const [position, name] = col.split(/\.\s+/g);
   return {
     name,
-    position: Number(position),
+    position: Number(position)
   };
 };
 
@@ -56,8 +74,8 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
           name: name || '',
           position: Number(position),
           splits,
-          time,
-        },
+          time
+        }
       ];
     }
 
@@ -65,17 +83,19 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
   }, []);
 
 export const constructPoints = (row: string[]): ControlPoint[] =>
-  row.map((point): ControlPoint => {
-    const parsed = point.replace(/(\[|\])/g, '');
-    const position = parsed.match(/^(\d+)/);
-    const identifier = parsed.match(/\.\s+(\d+)/);
-    return {
-      identifier: identifier ? identifier[1] : '',
-      position: position ? Number(position[0]) : 0,
-    };
-  });
+  row.map(
+    (point): ControlPoint => {
+      const parsed = point.replace(/(\[|\])/g, '');
+      const position = parsed.match(/^(\d+)/);
+      const identifier = parsed.match(/\.\s+(\d+)/);
+      return {
+        identifier: identifier ? identifier[1] : '',
+        position: position ? Number(position[0]) : 0
+      };
+    }
+  );
 
-const parsePre = (pre: string): { participants: IntervalParticipant[], points: ControlPoint[] } => {
+const parsePre = (pre: string): { participants: IntervalParticipant[]; points: ControlPoint[] } => {
   const rows = cleanTags(pre);
   const points = constructPoints(rows.shift() || []);
 
@@ -83,7 +103,7 @@ const parsePre = (pre: string): { participants: IntervalParticipant[], points: C
 
   return {
     participants,
-    points,
+    points
   };
 };
 
@@ -91,14 +111,11 @@ export const parseIntervals = (data: RawScrapeData): IntervalsResults => {
   const { title } = data;
   const routes = data.routes.map(constructRoute);
 
-  const results = mergeObj(
-    data.pre.map(parsePre),
-    routes.map((route) => ({ route })),
-  );
+  const results = mergeObj(data.pre.map(parsePre), routes.map(route => ({ route })));
 
   return {
     results,
     routes,
-    title,
+    title
   };
 };
