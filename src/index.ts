@@ -3,6 +3,8 @@ import { RequestQuery } from './types';
 import { fetchFile, detectEncoding, convertToUtf, scrape, decideDocType } from './utils';
 import { parseResults, parseIntervals } from './scrape';
 
+const cache: { [url: string]: string } = {};
+
 export const handler = async (req: Request, res: Response) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'GET');
@@ -13,6 +15,13 @@ export const handler = async (req: Request, res: Response) => {
       .send(message)
       .end();
 
+  const resolve = (body: string) =>
+    res
+      .status(200)
+      .type('application/json')
+      .send(body)
+      .end();
+
   if (!req.query) {
     return reject('Request query is empty');
   }
@@ -21,6 +30,10 @@ export const handler = async (req: Request, res: Response) => {
 
   if (!query.url) {
     return reject('Request url query is empty');
+  }
+
+  if (cache[query.url]) {
+    return resolve(cache[query.url]);
   }
 
   const data = await fetchFile(query.url);
@@ -44,9 +57,7 @@ export const handler = async (req: Request, res: Response) => {
     documentType === 'intervals' ? parseIntervals(scrapeData) : parseResults(scrapeData)
   );
 
-  res
-    .status(200)
-    .type('application/json')
-    .send(responseBody)
-    .end();
+  cache[query.url] = responseBody;
+
+  resolve(responseBody);
 };
