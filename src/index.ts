@@ -4,6 +4,9 @@ import { fetchFile, detectEncoding, convertToUtf, scrape, decideDocType } from '
 import { parseResults, parseIntervals } from './scrape';
 
 export const handler = async (req: Request, res: Response) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET');
+
   const reject = (message: string): void =>
     res
       .status(400)
