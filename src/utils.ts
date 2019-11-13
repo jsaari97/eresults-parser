@@ -73,7 +73,7 @@ export const constructRoute = (route: string): Route => {
 
   return {
     length: length && length.match(/\d+/g) ? Number(length) : null,
-    name
+    name: name.replace(/[^a-zA-Z]/g, '')
   };
 };
 

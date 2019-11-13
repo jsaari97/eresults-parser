@@ -65,5 +65,10 @@ describe('constructRoute()', () => {
       length: 6.6,
       name: 'A'
     });
+
+    expect(constructRoute('Bana A, hello world')).toEqual({
+      length: null,
+      name: 'A'
+    });
   });
 });
