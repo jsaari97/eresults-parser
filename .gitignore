@@ -7,3 +7,4 @@ coverage/
 package.zip
 package/
 junit.xml
+/mock/data
