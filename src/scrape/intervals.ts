@@ -20,7 +20,16 @@ export const cleanTags = (data: string): string[][] =>
         .map(col => col.trim())
         .filter(Boolean)
     )
-    .filter(row => row.length);
+    .filter(
+      (row, i, arr) =>
+        row.length ||
+        (i &&
+          arr[i - 1][0] &&
+          arr[i - 1][0].match(/[a-zA-Z]/g) &&
+          arr[i + 1] &&
+          arr[i + 1][0] &&
+          arr[i + 1][0].match(/[a-zA-Z]/g))
+    );
 
 export const getEndTime = (col: string): string | null => (col.match(/\d/g) ? col : null);
 
@@ -111,7 +120,10 @@ export const parseIntervals = (data: RawScrapeData): IntervalsResults => {
   const { title } = data;
   const routes = data.routes.map(constructRoute);
 
-  const results = mergeObj(data.pre.map(parsePre), routes.map(route => ({ route })));
+  const results = mergeObj(
+    data.pre.map(parsePre),
+    routes.map(route => ({ route }))
+  );
 
   return {
     results,
