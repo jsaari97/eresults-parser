@@ -20,7 +20,7 @@
     "@types/jest": "^24.0.23",
     "@types/node": "^11.15.2",
     "@types/x-ray": "^2.3.3",
-    "codecov": "^3.6.1",
+    "codecov": "^3.6.5",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
