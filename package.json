@@ -10,24 +10,24 @@
   "dependencies": {
     "detect-character-encoding": "^0.8.0",
     "he": "^1.2.0",
-    "iconv-lite": "^0.5.0",
+    "iconv-lite": "^0.5.1",
     "x-ray": "^2.3.4"
   },
   "devDependencies": {
     "@types/detect-character-encoding": "^0.7.0",
-    "@types/express": "^4.17.2",
-    "@types/he": "^1.1.0",
-    "@types/jest": "^24.0.23",
-    "@types/node": "^11.15.2",
+    "@types/express": "^4.17.4",
+    "@types/he": "^1.1.1",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.0",
     "@types/x-ray": "^2.3.3",
-    "codecov": "^3.6.1",
-    "jest": "^24.9.0",
-    "prettier": "^1.19.1",
-    "ts-jest": "^24.1.0",
-    "tslint": "^5.20.1",
+    "codecov": "^3.6.5",
+    "jest": "^25.2.7",
+    "prettier": "^2.0.4",
+    "ts-jest": "^25.3.1",
+    "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-sonarts": "^1.9.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "build": "rm -rf dist package.zip && tsc -p tsconfig.json && cp package*.json dist && cd dist && zip -r -X ../package.zip * && cd ..",
