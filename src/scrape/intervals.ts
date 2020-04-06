@@ -3,21 +3,21 @@ import {
   IntervalsResults,
   IntervalParticipant,
   ControlPoint,
-  TimePoint
+  TimePoint,
 } from '../types';
 import { constructRoute, mergeObj } from '../utils';
 
 export const cleanTags = (data: string): string[][] =>
   data
     .split('\n')
-    .map(row =>
+    .map((row) =>
       row
         .replace(/(\s\s+)/g, '  ')
         .replace(/([0-9])([A-Za-z])/g, '$1 $2')
         .replace(/[^A-Za-z](-)([A-Za-z])/g, '$1 $2')
         .replace('\r', '')
         .split(/(?=\s\d+|\s-\s|^-\s|\s-$|(?<=[-0-9])\s+(?=[a-zA-Z]))/g)
-        .map(col => col.trim())
+        .map((col) => col.trim())
         .filter(Boolean)
     )
     .filter(
@@ -34,22 +34,17 @@ export const cleanTags = (data: string): string[][] =>
 export const getEndTime = (col: string): string | null => (col.match(/\d/g) ? col : null);
 
 export const constructTimePoint = (
-  intervals: Array<TimePoint | null>,
+  intervals: (TimePoint | null)[],
   col: string
-): Array<TimePoint | null> => {
+): (TimePoint | null)[] => {
   const split = col.split('-');
   if (!split[0]) {
     return [...intervals, null];
   }
+
   const rank = Number(split.shift());
   const [time] = split;
-  const diff =
-    (
-      intervals
-        .slice()
-        .reverse()
-        .find(Boolean) || { rank }
-    ).rank - rank;
+  const diff = (intervals.slice().reverse().find(Boolean) || { rank }).rank - rank;
 
   return [...intervals, { rank, time, diff }];
 };
@@ -58,14 +53,15 @@ export const getPositionAndName = (col: string): { position: number | null; name
   if (!col.match(/\d/g)) {
     return {
       name: col,
-      position: null
+      position: null,
     };
   }
 
   const [position, name] = col.split(/\.\s+/g);
+
   return {
     name,
-    position: Number(position)
+    position: Number(position),
   };
 };
 
@@ -76,6 +72,7 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
       const time = getEndTime(row.pop() || '');
       const increments = row.reduce(constructTimePoint, []);
       const splits = rows[i + 1] ? rows[i + 1].reduce(constructTimePoint, []) : [];
+
       return [
         ...result,
         {
@@ -83,8 +80,8 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
           name: name || '',
           position: Number(position),
           splits,
-          time
-        }
+          time,
+        },
       ];
     }
 
@@ -97,9 +94,10 @@ export const constructPoints = (row: string[]): ControlPoint[] =>
       const parsed = point.replace(/(\[|\])/g, '');
       const position = parsed.match(/^(\d+)/);
       const identifier = parsed.match(/\.\s+(\d+)/);
+
       return {
         identifier: identifier ? identifier[1] : '',
-        position: position ? Number(position[0]) : 0
+        position: position ? Number(position[0]) : 0,
       };
     }
   );
@@ -112,7 +110,7 @@ const parsePre = (pre: string): { participants: IntervalParticipant[]; points: C
 
   return {
     participants,
-    points
+    points,
   };
 };
 
@@ -122,12 +120,12 @@ export const parseIntervals = (data: RawScrapeData): IntervalsResults => {
 
   const results = mergeObj(
     data.pre.map(parsePre),
-    routes.map(route => ({ route }))
+    routes.map((route) => ({ route }))
   );
 
   return {
     results,
     routes,
-    title
+    title,
   };
 };

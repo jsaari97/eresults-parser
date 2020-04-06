@@ -3,9 +3,6 @@
     "\r\n  (Startat: 13, Utgick: 0, Diskvalificierat: 0)\r\n\r\n   1. sssss sssss                sssss          39.49\r\n   2. sssss sssss               sssss sssss          41.10     +1.21\r\n   3. sssss sssss               sssss          48.47     +8.58\r\n   4. sssss sssss                    sssss              49.10     +9.21\r\n   5. sssss sssss               sssss              51.04    +11.15\r\n   6. sssss sssss                 sssss               59.06    +19.17\r\n   7. sssss sssss                 sssss        1.00.13    +20.24\r\n   8. sssss sssss-sssss      sssss            1.05.53    +26.04\r\n   9. sssss sssss               sssss           1.08.24    +28.35\r\n  10. sssss sssss                               1.09.08    +29.19\r\n  11. sssss sssss             sssss sssss   1.09.56    +30.07\r\n  12. sssss sssss              sssss            1.10.21    +30.32\r\n  13. sssss sssss         sssss               1.20.26    +40.37\r\n",
     "\r\n  (Startat: 21, Utgick: 0, Diskvalificierat: 0)\r\n\r\n   1. sssss sssss             sssss              46.03\r\n   2. sssss sssss               sssss              50.04     +4.01\r\n   3. sssss sssss             sssss              51.06     +5.03\r\n   4. sssss sssss                sssss              54.24     +8.21\r\n   5. sssss sssss               sssss              55.02     +8.59\r\n   6. sssss sssss                sssss              55.31     +9.28\r\n   7. sssss sssss                   sssss              55.33     +9.30\r\n   8. sssss sssss              sssss              57.18    +11.15\r\n   9. sssss sssss          sssss              57.20    +11.17\r\n  10. sssss sssss                sssss              59.17    +13.14\r\n  11. sssss sssss              sssss               1.00.46    +14.43\r\n  12. sssss sssss               sssss            1.00.49    +14.46\r\n  13. sssss sssss              sssss            1.01.30    +15.27"
   ],
-  "routes": [
-    "A-bana 6.07 km",
-    "B-bana 5.110 km"
-  ],
+  "routes": ["A-bana 6.07 km", "B-bana 5.110 km"],
   "title": "Resultat 27.09.2018"
 }

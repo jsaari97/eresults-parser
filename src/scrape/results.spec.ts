@@ -3,7 +3,7 @@ import {
   resolvePositionAndName,
   constructParticipant,
   constructStatistics,
-  cleanTags
+  cleanTags,
 } from './results';
 
 describe('cleanTags()', () => {
@@ -54,7 +54,7 @@ describe('constructParticipant()', () => {
       diff: '+01:30',
       name: 'John Doe',
       position: 2,
-      time: '51:25'
+      time: '51:25',
     });
   });
 
@@ -65,7 +65,7 @@ describe('constructParticipant()', () => {
       diff: '+01:30',
       name: 'John Doe',
       position: 2,
-      time: '51:25'
+      time: '51:25',
     });
   });
 
@@ -76,7 +76,7 @@ describe('constructParticipant()', () => {
       diff: null,
       name: 'John Doe',
       position: 1,
-      time: '51:25'
+      time: '51:25',
     });
   });
 
@@ -87,7 +87,7 @@ describe('constructParticipant()', () => {
       diff: null,
       name: 'John Doe',
       position: null,
-      time: null
+      time: null,
     });
   });
 
@@ -98,7 +98,7 @@ describe('constructParticipant()', () => {
       diff: null,
       name: 'John Doe',
       position: null,
-      time: null
+      time: null,
     });
   });
 });
@@ -109,7 +109,7 @@ describe('constructStatistics()', () => {
     expect(constructStatistics(row)).toEqual({
       disqualified: 7,
       exited: 15,
-      started: 30
+      started: 30,
     });
   });
 });

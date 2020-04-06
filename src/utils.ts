@@ -21,7 +21,7 @@ export const convertToUtf = (data: Buffer, encoding: string): string =>
 export const fetchFile = (url: string): Promise<Buffer | null> =>
   new Promise((resolve, reject) => {
     const request = url.match(/^https:/) ? https : http;
-    request.get(url, res => {
+    request.get(url, (res) => {
       if (!res.headers['content-type'] || !res.headers['content-type'].match(/text\/html/)) {
         reject(null);
       }
@@ -41,10 +41,10 @@ export const fetchFile = (url: string): Promise<Buffer | null> =>
   });
 
 export const decideDocType = ({ pre }: RawScrapeData): 'results' | 'intervals' => {
-  const parsed = pre.map(item => item.replace(/\s/g, ''));
-  const ratio = parsed.map(item => (item.match(/(-|\[|\])/g) || []).length / item.length);
+  const parsed = pre.map((item) => item.replace(/\s/g, ''));
+  const ratio = parsed.map((item) => (item.match(/(-|\[|\])/g) || []).length / item.length);
 
-  return ratio.filter(r => r > 0.1).length > ratio.length / 2 ? 'intervals' : 'results';
+  return ratio.filter((r) => r > 0.1).length > ratio.length / 2 ? 'intervals' : 'results';
 };
 
 const x = xray();
@@ -55,7 +55,7 @@ export const scrape = (data: string): Promise<RawScrapeData | null> =>
       const result: RawScrapeData = await x(data, 'body', {
         pre: ['pre'],
         routes: ['h3', 'h3 a'],
-        title: 'h2'
+        title: 'h2',
       });
 
       return resolve(result);
@@ -73,9 +73,9 @@ export const constructRoute = (route: string): Route => {
 
   return {
     length: length && length.match(/\d+/g) ? Number(length) : null,
-    name: name.replace(/[^a-zA-Z]/g, '')
+    name: name.replace(/[^a-zA-Z]/g, ''),
   };
 };
 
-export const mergeObj = <T1, T2>(a: T1[], b: T2[]): Array<T1 & T2> =>
+export const mergeObj = <T1, T2>(a: T1[], b: T2[]): (T1 & T2)[] =>
   a.map((one, i) => ({ ...one, ...b[i] }));

@@ -48,27 +48,27 @@ describe('constructRoute()', () => {
   it('should return correct format', () => {
     expect(constructRoute('A 6,6 km, tilanne rasteilla, rastivälien ajat')).toEqual({
       length: 6.6,
-      name: 'A'
+      name: 'A',
     });
 
     expect(constructRoute('Rata-A 6,6 km, tilanne rasteilla, rastivälien ajat')).toEqual({
       length: 6.6,
-      name: 'A'
+      name: 'A',
     });
 
     expect(constructRoute('Bana A 6,6 km')).toEqual({
       length: 6.6,
-      name: 'A'
+      name: 'A',
     });
 
     expect(constructRoute('A-bana 6,6 km')).toEqual({
       length: 6.6,
-      name: 'A'
+      name: 'A',
     });
 
     expect(constructRoute('Bana A, hello world')).toEqual({
       length: null,
-      name: 'A'
+      name: 'A',
     });
   });
 });

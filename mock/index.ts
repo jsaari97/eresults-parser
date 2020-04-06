@@ -4,8 +4,8 @@ import * as path from 'path';
 
 const req: any = {
   query: {
-    url: 'http://www.okbotnia.fi/uploads/Motion2019/v20190621.html'
-  }
+    url: 'http://www.okbotnia.fi/uploads/Motion2019/v20190621.html',
+  },
 };
 
 const mockFn = (): any => res;
@@ -27,7 +27,7 @@ const res: any = {
   },
   set: mockFn,
   status: mockFn,
-  type: mockFn
+  type: mockFn,
 };
 
 handler(req, res).then(() => undefined);

@@ -14,7 +14,7 @@ describe('cleanTags()', () => {
       ['1-05.30', '2-20.56', 'Ingen sluttid'],
       ['2. John-Doe Doe', '1-05.30', '2-20.56', 'Ingen sluttid'],
       [],
-      ['2. John-Doe Doe-Doe', '1-05.30', '2-20.56', 'Ingen sluttid']
+      ['2. John-Doe Doe-Doe', '1-05.30', '2-20.56', 'Ingen sluttid'],
     ]);
   });
 
@@ -24,7 +24,7 @@ describe('cleanTags()', () => {
 
     expect(cleanTags(pre)).toEqual([
       ['21. Ssss Ssss', '-', '-', '-', '-', 'Ingen sluttid'],
-      ['-', '-', '-', '-']
+      ['-', '-', '-', '-'],
     ]);
   });
 
@@ -38,7 +38,7 @@ describe('cleanTags()', () => {
       ['10. Ssss Ssssss', '1:00:29'],
       [],
       ['11. Sss Ssss', '19-05:29', '20-10:46', '1:00:37'],
-      ['19-05:29', '20-05:17']
+      ['19-05:29', '20-05:17'],
     ]);
   });
 });
@@ -50,7 +50,7 @@ describe('constructPoints()', () => {
     expect(constructPoints(row)).toEqual([
       { position: 1, identifier: '035' },
       { position: 14, identifier: '031' },
-      { position: 15, identifier: '100' }
+      { position: 15, identifier: '100' },
     ]);
   });
 });
@@ -67,7 +67,7 @@ describe('getPositionAndName()', () => {
   it('should handle long names', () => {
     expect(getPositionAndName('112. John Doe-mc asdf')).toEqual({
       name: 'John Doe-mc asdf',
-      position: 112
+      position: 112,
     });
   });
 });

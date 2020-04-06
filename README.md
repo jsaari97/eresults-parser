@@ -6,13 +6,15 @@ Unofficial HTML to JSON parser cloud function for eResults. Tested with eResults
 ![circleci](https://img.shields.io/circleci/project/github/jsaari97/eresults-parser/master.svg?style=flat)
 
 ## Features
-* eResults Lite 3 and 4 support.
-* Automatically detects if results or splits.
-* Outputs easy to read JSON.
+
+- eResults Lite 3 and 4 support.
+- Automatically detects if results or splits.
+- Outputs easy to read JSON.
 
 ## Deploy
 
 Transpile typescript into javascript and zip dist directory
+
 ```
 $ npm run build
 ```
@@ -20,10 +22,10 @@ $ npm run build
 After that you can upload .zip file to your Google Cloud Function.
 
 ## API
-* `/?url=<url-to-html>`
 
-The MIT License (MIT)
-=====================
+- `/?url=<url-to-html>`
+
+# The MIT License (MIT)
 
 Copyright © `2019` `Jim Saari`
 
