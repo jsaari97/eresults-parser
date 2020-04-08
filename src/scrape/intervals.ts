@@ -7,29 +7,38 @@ import {
 } from '../types';
 import { constructRoute, mergeObj } from '../utils';
 
-export const cleanTags = (data: string): string[][] =>
-  data
-    .split('\n')
-    .map((row) =>
-      row
-        .replace(/(\s\s+)/g, '  ')
-        .replace(/([0-9])([A-Za-z])/g, '$1 $2')
-        .replace(/[^A-Za-z](-)([A-Za-z])/g, '$1 $2')
-        .replace('\r', '')
-        .split(/(?=\s\d+|\s-\s|^-\s|\s-$|(?<=[-0-9])\s+(?=[a-zA-Z]))/g)
-        .map((col) => col.trim())
-        .filter(Boolean)
-    )
-    .filter(
-      (row, i, arr) =>
-        row.length ||
-        (i &&
-          arr[i - 1][0] &&
-          arr[i - 1][0].match(/[a-zA-Z]/g) &&
-          arr[i + 1] &&
-          arr[i + 1][0] &&
-          arr[i + 1][0].match(/[a-zA-Z]/g))
-    );
+const characterIndices = (str: string, char: string): number[] => {
+  const indices = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === char) {
+      indices.push(i);
+    }
+  }
+
+  return indices;
+};
+
+export const cleanTags = (data: string): string[][] => {
+  const rows = data.split('\n').map((x) => x.replace('\r', '')).filter(Boolean);
+  const indices = characterIndices(rows[0], ']').map((x) => x + 1);
+
+  return rows.map((row, rowIndex) =>
+    indices
+      .map((pos, i) => row.substring(indices[i - 1] || 0, pos))
+      .concat(row.substring(indices[indices.length - 1]))
+      .reduce((acc: string[], col, i, arr): string[] => {
+        if (i === 0 && rowIndex % 2 === 1) {
+          const index = col.lastIndexOf(' ');
+          return [col.substring(0, index), col.substring(index)];
+        } else if (i === arr.length - 1 && rowIndex > 0 && rowIndex % 2 === 0) {
+          return acc;
+        }
+
+        return [...acc, col];
+      }, [])
+      .map((x) => x.trim())
+  );
+};
 
 export const getEndTime = (col: string): string | null => (col.match(/\d/g) ? col : null);
 
