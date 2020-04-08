@@ -2,8 +2,8 @@
 
 Unofficial HTML to JSON parser cloud function for eResults. Tested with eResults Lite 3 and 4.
 
-![codecov](https://img.shields.io/codecov/c/github/jsaari97/eresults-parser.svg?style=flat)
-![circleci](https://img.shields.io/circleci/project/github/jsaari97/eresults-parser/master.svg?style=flat)
+![codecov](https://img.shields.io/codecov/c/github/jsaari97/eresults-parser)
+![circleci](https://img.shields.io/circleci/build/github/jsaari97/eresults-parser/master)
 
 ## Features
 
