@@ -31,7 +31,7 @@ The parser calculates automatically whether the document is invalid, a result- o
 If an error occurs, the service responds with `400` and an error message, otherwise `200` with a JSON payload.
 
 
-#### Result Document
+#### Result document response:
 
 ```javascript
 {
@@ -61,7 +61,7 @@ If an error occurs, the service responds with `400` and an error message, otherw
 }
 ```
 
-#### Splits Document
+#### Splits document response:
 
 ```javascript
 {
