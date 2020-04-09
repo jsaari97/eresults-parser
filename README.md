@@ -69,18 +69,18 @@ If an error occurs, the service responds with `400` and an error message, otherw
     "participants": [{
       "increments": [
         {
-          rank: number,
-          time: string,
-          diff: number,
+          "rank": number,
+          "time": string,
+          "diff": number,
         } | null
       ],
       "name": string,
       "position": number | null,
       "splits": [
         {
-          rank: number,
-          time: string,
-          diff: number,
+          "rank": number,
+          "time": string,
+          "diff": number,
         } | null
       ],
       "time": string | null
