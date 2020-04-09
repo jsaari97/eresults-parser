@@ -74,6 +74,7 @@ jobs:
           command: |
             cd dist
             gcloud functions deploy eresults-parser \
+              --region ${GCLOUD_REGION} \
               --entry-point handler \
               --runtime nodejs10 \
               --verbosity info \
