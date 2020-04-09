@@ -56,7 +56,7 @@ describe('cleanTags()', () => {
 
 describe('constructPoints()', () => {
   it('should parse points', () => {
-    const row = ['1. [035]', '14. [031]', '15. [100] Resultat'];
+    const row = ['1. [035]', '14. [031]', '15. [100]', 'Resultat'];
 
     expect(constructPoints(row)).toEqual([
       { position: 1, identifier: '035' },

@@ -19,7 +19,10 @@ const characterIndices = (str: string, char: string): number[] => {
 };
 
 export const cleanTags = (data: string): string[][] => {
-  const rows = data.split('\n').map((x) => x.replace('\r', '')).filter(Boolean);
+  const rows = data
+    .split('\n')
+    .map((x) => x.replace('\r', ''))
+    .filter(Boolean);
   const indices = characterIndices(rows[0], ']').map((x) => x + 1);
 
   return rows.map((row, rowIndex) =>
@@ -98,18 +101,20 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
   }, []);
 
 export const constructPoints = (row: string[]): ControlPoint[] =>
-  row.map(
-    (point): ControlPoint => {
-      const parsed = point.replace(/(\[|\])/g, '');
-      const position = parsed.match(/^(\d+)/);
-      const identifier = parsed.match(/\.\s+(\d+)/);
+  row
+    .filter((point) => point.match(/\d/))
+    .map(
+      (point): ControlPoint => {
+        const parsed = point.replace(/(\[|\])/g, '');
+        const position = parsed.match(/^(\d+)/);
+        const identifier = parsed.match(/\.\s+(\d+)/);
 
-      return {
-        identifier: identifier ? identifier[1] : '',
-        position: position ? Number(position[0]) : 0,
-      };
-    }
-  );
+        return {
+          identifier: identifier ? identifier[1] : '',
+          position: position ? Number(position[0]) : 0,
+        };
+      }
+    );
 
 const parsePre = (pre: string): { participants: IntervalParticipant[]; points: ControlPoint[] } => {
   const rows = cleanTags(pre);
