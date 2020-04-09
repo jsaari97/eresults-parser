@@ -30,6 +30,10 @@ jobs:
       - run:
           name: Code coverage
           command: ./node_modules/.bin/codecov --token=$CODECOV_KEY
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
   build:
     <<: *defaults
     docker:
