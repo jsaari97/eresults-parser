@@ -1,6 +1,6 @@
 defaults: &defaults
   working_directory: ~/project
-  
+
 attach: &attach
   at: ~/project
 
@@ -47,7 +47,7 @@ jobs:
             node -e "console.log(JSON.stringify({ dependencies: require('./package.json').dependencies }))" > dist/package.json
       - persist_to_workspace:
           root: .
-          paths: 
+          paths:
             - dist
   deploy:
     <<: *defaults
@@ -69,7 +69,13 @@ jobs:
           name: Deploy Cloud Function
           command: |
             cd dist
-            gcloud beta functions deploy e-results-parser --entry-point handler --trigger-http --verbosity=info
+            gcloud functions deploy eresults-parser \
+              --entry-point handler \
+              --runtime nodejs10 \
+              --verbosity info \
+              --memory 128MB \
+              --trigger-http \
+              --allow-unauthenticated
 
 workflows:
   version: 2.1

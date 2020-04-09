@@ -31,6 +31,7 @@
   },
   "scripts": {
     "test": "jest",
+    "build": "tsc",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "type-check": "tsc --noEmit"
   }
