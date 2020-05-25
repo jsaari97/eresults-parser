@@ -5,7 +5,7 @@ import { parseResults, parseIntervals } from './scrape';
 
 const cache: { [url: string]: string } = {};
 
-export const handler = async (req: Request, res: Response) => {
+export const handler = async (req: Request<any, any, any, { url?: string }>, res: Response) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'GET');
 
@@ -17,7 +17,7 @@ export const handler = async (req: Request, res: Response) => {
     return reject('Request query is empty');
   }
 
-  const { query }: { query: RequestQuery } = req;
+  const { query } = req;
 
   if (!query.url) {
     return reject('Request url query is empty');
