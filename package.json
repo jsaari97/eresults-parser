@@ -1,7 +1,7 @@
 {
   "name": "eresults-parser",
   "description": "Unofficial HTML to JSON parser for eResult Lite",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "index.js",
   "engines": {
     "node": "10.18.1"
