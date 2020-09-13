@@ -1,9 +1,8 @@
-import * as iconv from 'iconv-lite';
-import * as https from 'https';
-import * as http from 'http';
-import * as he from 'he';
-import * as detectCharEncoding from 'detect-character-encoding';
-import * as xray from 'x-ray';
+import iconv from 'iconv-lite';
+import fetch from 'node-fetch';
+import he from 'he';
+import detectCharEncoding from 'detect-character-encoding';
+import xray from 'x-ray';
 import { RawScrapeData, Route } from './types';
 
 export const detectEncoding = (input: Buffer): string => {
@@ -18,27 +17,10 @@ export const convertToUtf = (data: Buffer, encoding: string): string =>
     .replace(/ĺ/g, 'å')
     .replace(/<br>/g, '\n');
 
-export const fetchFile = (url: string): Promise<Buffer | null> =>
-  new Promise((resolve, reject) => {
-    const request = url.match(/^https:/) ? https : http;
-    request.get(url, (res) => {
-      if (!res.headers['content-type'] || !res.headers['content-type'].match(/text\/html/)) {
-        reject(null);
-      }
-
-      res.setEncoding('binary');
-      const data: Uint8Array[] = [];
-
-      res
-        .on('data', (chunk: string) => {
-          data.push(Buffer.from(chunk, 'binary'));
-        })
-        .on('end', () => {
-          return resolve(Buffer.concat(data));
-        })
-        .on('error', reject);
-    });
-  });
+export const fetchFile = async (url: string): Promise<Buffer | null> => {
+  const res = await fetch(url);
+  return await res.buffer();
+};
 
 export const decideDocType = ({ pre }: RawScrapeData): 'results' | 'intervals' => {
   const parsed = pre.map((item) => item.replace(/\s/g, ''));

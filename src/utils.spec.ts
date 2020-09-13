@@ -33,12 +33,10 @@ describe('mergeObj()', () => {
 
 describe('fetchFile()', () => {
   it('should fetch http', async () => {
-    jest.mock('http');
     const res = await fetchFile('http://google.com/');
     expect(typeof res).toBeTruthy();
   });
   it('should fetch https', async () => {
-    jest.mock('https');
     const res = await fetchFile('https://google.com/');
     expect(typeof res).toBeTruthy();
   });
