@@ -42,10 +42,14 @@ export const constructStatistics = (row: string[]): Statistics =>
     .slice(0, 3)
     .filter(Boolean)
     .reduce(
-      (acc: Statistics, cur: string, i: number): Statistics => ({
-        ...acc,
-        [labels[i]]: cur && cur.match(/\d+/g) ? Number(cur.match(/\d+/g)![0]) : 0,
-      }),
+      (acc: Statistics, cur: string, i: number): Statistics => {
+        const count = cur.match(/\d+/g);
+
+        return {
+          ...acc,
+          [labels[i]]: count ? parseInt(count[0], 10) : 0,
+        };
+      },
       { started: 0, exited: 0, disqualified: 0 }
     );
 

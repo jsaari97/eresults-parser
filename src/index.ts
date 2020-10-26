@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
-import { RequestQuery } from './types';
 import { fetchFile, detectEncoding, convertToUtf, scrape, decideDocType } from './utils';
 import { parseResults, parseIntervals } from './scrape';
 
 const cache: { [url: string]: string } = {};
 
-export const handler = async (req: Request<any, any, any, { url?: string }>, res: Response) => {
+export const handler = async (
+  req: Request<unknown, unknown, unknown, { url?: string }>,
+  res: Response
+): Promise<void> => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'GET');
 

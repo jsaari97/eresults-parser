@@ -2,15 +2,15 @@ import { handler } from '../src';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const req: any = {
+const req: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
   query: {
     url: 'https://www.okbotnia.fi/wp-content/uploads/2020/04/t20200709.html',
   },
 };
 
-const mockFn = (): any => res;
+const mockFn = (): unknown => res;
 
-const res: any = {
+const res: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
   end: mockFn,
   send: (data: string) => {
     if (!fs.existsSync(path.join(__dirname, '/data'))) {
