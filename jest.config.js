@@ -7,7 +7,7 @@ module.exports = {
   coverageDirectory: path.resolve(__dirname, 'coverage'),
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.jest.json',
+      tsconfig: 'tsconfig.jest.json',
     },
   },
 };
