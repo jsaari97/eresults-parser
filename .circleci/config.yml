@@ -14,7 +14,7 @@ jobs:
   test:
     <<: *defaults
     docker:
-      - image: circleci/node:10.18.1
+      - image: circleci/node:erbium
     steps:
       - checkout
       - restore_cache:
@@ -37,7 +37,7 @@ jobs:
   build:
     <<: *defaults
     docker:
-      - image: circleci/node:10.18.1
+      - image: circleci/node:erbium
     steps:
       - checkout
       - attach_workspace:
@@ -76,14 +76,14 @@ jobs:
             gcloud functions deploy eresults-parser \
               --region ${GCLOUD_REGION} \
               --entry-point handler \
-              --runtime nodejs10 \
+              --runtime nodejs12 \
               --verbosity info \
               --memory 128MB \
               --trigger-http \
               --allow-unauthenticated
 
 workflows:
-  version: 2.1
+  version: 2
   deploy:
     jobs:
       - test
