@@ -11,9 +11,13 @@ export const handler = async (
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'GET');
 
-  const reject = (message: string): void => res.status(400).send(message).end();
+  const reject = (message: string): void => {
+    res.status(400).send(message).end();
+  };
 
-  const resolve = (body: string) => res.status(200).type('application/json').send(body).end();
+  const resolve = (body: string) => {
+    res.status(200).type('application/json').send(body).end();
+  };
 
   if (!req.query) {
     return reject('Request query is empty');
