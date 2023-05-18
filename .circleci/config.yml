@@ -14,7 +14,7 @@ jobs:
   test:
     <<: *defaults
     docker:
-      - image: circleci/node:16
+      - image: circleci/node:18
     steps:
       - checkout
       - restore_cache:
@@ -30,70 +30,23 @@ jobs:
       - run:
           name: Code coverage
           command: ./node_modules/.bin/codecov --token=$CODECOV_KEY
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules
-  build:
-    <<: *defaults
-    docker:
-      - image: circleci/node:erbium
-    steps:
-      - checkout
-      - attach_workspace:
-          <<: *attach
-      - run:
-          name: Build
-          command: npm run build
-      - run:
-          name: Generate package.json
-          command: |
-            node -e "console.log(JSON.stringify({ dependencies: require('./package.json').dependencies }))" > dist/package.json
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist
   deploy:
-    <<: *defaults
-    docker:
-      - image: google/cloud-sdk
+    runs-on: ubuntu-latest
+    name: Deploy
     steps:
-      - checkout
-      - attach_workspace:
-          <<: *attach
-      - run:
-          name: Dump Google Cloud Credentials to file
-          command: echo ${GCLOUD_SERVICE_KEY} | base64 --decode --ignore-garbage > ~/gcloud-key.json
-      - run:
-          name: Google Cloud auth
-          command: |
-            gcloud auth activate-service-account --key-file ~/gcloud-key.json
-            gcloud --quiet config set project ${GCLOUD_PROJECT}
-      - run:
-          name: Deploy Cloud Function
-          command: |
-            cd dist
-            gcloud functions deploy eresults-parser \
-              --region ${GCLOUD_REGION} \
-              --entry-point handler \
-              --runtime nodejs16 \
-              --verbosity info \
-              --memory 128MB \
-              --trigger-http \
-              --allow-unauthenticated
+      - uses: actions/checkout@v2
+      - name: Publish
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
 
 workflows:
   version: 2
   deploy:
     jobs:
       - test
-      - build:
-          requires:
-            - test
-          filters:
-            <<: *deploy_branches
       - deploy:
           requires:
-            - build
+            - test
           filters:
             <<: *deploy_branches

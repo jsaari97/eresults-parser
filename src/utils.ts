@@ -1,25 +1,29 @@
-import iconv from 'iconv-lite';
-import fetch from 'node-fetch';
-import he from 'he';
-import detectCharEncoding from 'detect-character-encoding';
-import xray from 'x-ray';
+/// <reference lib="dom" />
+
+import * as iconv from 'iconv-lite';
+import { decode } from 'html-entities';
+import chardet from 'chardet';
+import * as cheerio from 'cheerio';
 import { RawScrapeData, Route } from './types';
 
-export const detectEncoding = (input: Buffer): string => {
-  const results = detectCharEncoding(input);
-  return results ? results.encoding : 'utf-8';
+export const detectEncoding = (input: Uint8Array): string => {
+  const results = chardet.detect(input);
+  return results ?? 'utf-8';
 };
 
-export const convertToUtf = (data: Buffer, encoding: string): string =>
-  he
-    .decode(iconv.decode(data, encoding))
+export const convertToUtf = (data: Uint8Array, encoding: string): string =>
+  // iconv-lite types are broken
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  decode(iconv.decode(data as any, encoding))
     .replace(/Ĺ/g, 'Å')
     .replace(/ĺ/g, 'å')
     .replace(/<br>/g, '\n');
 
-export const fetchFile = async (url: string): Promise<Buffer | null> => {
+export const fetchFile = async (url: string): Promise<Uint8Array | null> => {
   const res = await fetch(url);
-  return await res.buffer();
+  const arrayBuffer = await res.arrayBuffer();
+
+  return new Uint8Array(arrayBuffer);
 };
 
 export const decideDocType = ({ pre }: RawScrapeData): 'results' | 'intervals' => {
@@ -29,18 +33,29 @@ export const decideDocType = ({ pre }: RawScrapeData): 'results' | 'intervals' =
   return ratio.filter((r) => r > 0.1).length > ratio.length / 2 ? 'intervals' : 'results';
 };
 
-const x = xray();
+const createQueryAll =
+  ($: cheerio.CheerioAPI) =>
+  (selector: string): string[] =>
+    $(selector)
+      .map((_, el) => $(el).text())
+      .toArray()
+      .filter(Boolean);
 
 export const scrape = (data: string): Promise<RawScrapeData | null> =>
   new Promise(async (resolve, reject) => {
     try {
-      const result: RawScrapeData = await x(data, 'body', {
-        pre: ['pre'],
-        routes: ['h3', 'h3 a'],
-        title: 'h2',
-      });
+      const $ = cheerio.load(data);
+      const queryAll = createQueryAll($);
 
-      return resolve(result);
+      const title = $('h2').text() || '';
+      const routes = queryAll('h3, h3 a');
+      const pre = queryAll('pre');
+
+      return resolve({
+        title,
+        routes,
+        pre,
+      });
     } catch (e) {
       return reject(null);
     }
