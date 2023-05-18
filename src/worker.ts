@@ -48,7 +48,7 @@ const handler: ExportedHandler = {
       const scrapeData = await scrape(decoded);
 
       if (!scrapeData) {
-        return reject('Could not retrieve information from html file');
+        return reject('Could not extract data from given HTML file');
       }
 
       const documentType = decideDocType(scrapeData);
@@ -58,7 +58,8 @@ const handler: ExportedHandler = {
 
       response = new Response(JSON.stringify(body), { headers, status: 200 });
 
-      response.headers.append('Cache-Control', `s-maxage=${15 * 60}`);
+      // Cache for 1 hour
+      response.headers.append('Cache-Control', `s-maxage=${60 * 60}`);
 
       ctx.waitUntil(cache.put(cacheKey, response.clone()));
     }
