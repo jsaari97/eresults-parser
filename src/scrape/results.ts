@@ -9,10 +9,10 @@ export const resolvePositionAndName = (col: string): [string, string] | [string]
 
   const parsed = col.replace(/^([A-Z]{3}|-|\s+)+\s/, '').trim();
   const firstSpace = parsed.indexOf(' ');
-  const first = parsed.substr(0, firstSpace);
-  const rest = parsed.substr(firstSpace + 1);
+  const first = parsed.slice(0, firstSpace);
+  const rest = parsed.slice(firstSpace + 1);
 
-  return ['null', `${first} ${rest}`];
+  return ['null', `${first} ${rest}`.replace(/(\s+)/g, ' ').trim()];
 };
 
 export const constructParticipant = (row: string[]): Participant => {
@@ -72,12 +72,10 @@ const parsePre = (pre: string): { participants: Participant[]; statistics: Stati
 
   const statistics = constructStatistics(rows.shift() || []);
 
-  const participants = rows.map(
-    (row: string[]): Participant => {
-      const first = resolvePositionAndName(row.shift() || '');
-      return constructParticipant([...first, ...row]);
-    }
-  );
+  const participants = rows.map((row: string[]): Participant => {
+    const first = resolvePositionAndName(row.shift() || '');
+    return constructParticipant([...first, ...row]);
+  });
 
   return {
     participants,

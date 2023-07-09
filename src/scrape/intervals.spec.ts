@@ -81,4 +81,8 @@ describe('getPositionAndName()', () => {
       position: 112,
     });
   });
+
+  it('should trim extra whitespace', () => {
+    expect(getPositionAndName('1. John  Doe')).toEqual({ position: 1, name: 'John Doe' });
+  });
 });

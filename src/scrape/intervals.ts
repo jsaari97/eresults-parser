@@ -72,7 +72,7 @@ export const getPositionAndName = (col: string): { position: number | null; name
   const [position, name] = col.split(/\.\s+/g);
 
   return {
-    name,
+    name: name ? name.replace(/(\s+)/g, ' ').trim() : '',
     position: Number(position),
   };
 };
@@ -89,7 +89,7 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
         ...result,
         {
           increments,
-          name: name || '',
+          name,
           position: Number(position),
           splits,
           time,
@@ -103,18 +103,16 @@ export const constructIntervalParticipants = (rows: string[][]): IntervalPartici
 export const constructPoints = (row: string[]): ControlPoint[] =>
   row
     .filter((point) => point.match(/\d/))
-    .map(
-      (point): ControlPoint => {
-        const parsed = point.replace(/(\[|\])/g, '');
-        const position = parsed.match(/^(\d+)/);
-        const identifier = parsed.match(/\.\s+(\d+)/);
+    .map((point): ControlPoint => {
+      const parsed = point.replace(/(\[|\])/g, '');
+      const position = parsed.match(/^(\d+)/);
+      const identifier = parsed.match(/\.\s+(\d+)/);
 
-        return {
-          identifier: identifier ? identifier[1] : '',
-          position: position ? Number(position[0]) : 0,
-        };
-      }
-    );
+      return {
+        identifier: identifier ? identifier[1] : '',
+        position: position ? Number(position[0]) : 0,
+      };
+    });
 
 const parsePre = (pre: string): { participants: IntervalParticipant[]; points: ControlPoint[] } => {
   const rows = cleanTags(pre);

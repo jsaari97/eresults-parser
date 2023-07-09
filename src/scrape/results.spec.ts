@@ -44,6 +44,10 @@ describe('resolvePositionAndName()', () => {
     const input = '- aaa aaaa';
     expect(resolvePositionAndName(input)).toEqual(['null', 'aaa aaaa']);
   });
+  it('should remove extra whitespace', () => {
+    const input = '- aaa  aaaa';
+    expect(resolvePositionAndName(input)).toEqual(['null', 'aaa aaaa']);
+  });
 });
 
 describe('constructParticipant()', () => {
