@@ -56,7 +56,7 @@ export const scrape = (data: string): Promise<RawScrapeData | null> =>
         routes,
         pre,
       });
-    } catch (e) {
+    } catch {
       return reject(null);
     }
   });
