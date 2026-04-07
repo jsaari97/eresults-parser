@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "lib": ["es2021"],
-    "module": "es2022",
-    "moduleResolution": "node",
+    "target": "es2022",
+    "lib": ["es2022"],
+    "module": "node16",
+    "moduleResolution": "node16",
     "types": ["@cloudflare/workers-types"],
     "resolveJsonModule": true,
     "allowJs": false,
