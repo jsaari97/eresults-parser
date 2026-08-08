@@ -4,7 +4,6 @@
     "lib": ["es2022"],
     "module": "node16",
     "moduleResolution": "node16",
-    "types": ["@cloudflare/workers-types"],
     "resolveJsonModule": true,
     "allowJs": false,
     "checkJs": false,

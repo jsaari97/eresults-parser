@@ -23,7 +23,7 @@ const handler: ExportedHandler = {
 
     const url = new URL(request.url);
 
-    const queryUrl = url.searchParams.get('url') as string;
+    const queryUrl = url.searchParams.get('url');
 
     if (!queryUrl) {
       return reject(`'url' query parameter is required`);
